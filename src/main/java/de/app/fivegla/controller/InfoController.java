@@ -1,6 +1,6 @@
 package de.app.fivegla.controller;
 
-import de.app.fivegla.controller.dto.VersionResponse;
+import de.app.fivegla.controller.dto.response.VersionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

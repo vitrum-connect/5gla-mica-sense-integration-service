@@ -6,7 +6,7 @@ POST {{base-url}}/drone/register
 Content-Type: application/json
 
 {
-  "droneId": "14111983"
+
 }
 
 
@@ -15,6 +15,7 @@ POST {{base-url}}/image-processing/
 Content-Type: application/json
 
 {
+  "droneId": "14111983",
   "micaSenseChannel": "RED",
   "base64EncodedTiffImage": "{{base64-encoded-tiff-image}}"
 }
