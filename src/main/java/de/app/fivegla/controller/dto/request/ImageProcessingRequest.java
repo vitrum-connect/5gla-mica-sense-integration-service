@@ -16,6 +16,12 @@ import lombok.Setter;
 public class ImageProcessingRequest {
 
     /**
+     * The id of the drone.
+     */
+    @Schema(description = "The id of the drone.")
+    private String droneId;
+
+    /**
      * The channel of the image since the value can not be read from the EXIF.
      */
     @NotNull
