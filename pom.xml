@@ -13,8 +13,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.app.5gla</groupId>
-    <artifactId>farm21-integration-service</artifactId>
-    <version>1.1.0</version>
+    <artifactId>mica-sense-integration-service</artifactId>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -94,6 +94,13 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.9.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- COMMONS IMAGING -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-imaging</artifactId>
+            µ<version>1.0-alpha3</version>
         </dependency>
 
     </dependencies>
