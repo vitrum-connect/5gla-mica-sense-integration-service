@@ -1,11 +1,11 @@
 ### Get version
 GET {{base-url}}/info/version
 
-### Get last run
-GET {{base-url}}/info/last-run
+### Process immage
+POST {{base-url}}/image-processing/
+Content-Type: application/json
 
-### Start import for sensors manually
-POST {{base-url}}/sensor-import/run
-
-### Start import for sensor data manually
-POST {{base-url}}/sensor-data-import/run
+{
+  "micaSenseChannel": "RED",
+  "base64EncodedTiffImage": "{{base64-encoded-tiff-image}}"
+}
