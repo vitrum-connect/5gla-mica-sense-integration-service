@@ -4,10 +4,13 @@ package de.app.fivegla.integration.fiware;
 import de.app.fivegla.api.Constants;
 import de.app.fivegla.fiware.DeviceIntegrationService;
 import de.app.fivegla.fiware.DeviceMeasurementIntegrationService;
+import de.app.fivegla.fiware.api.enums.DeviceCategoryValues;
+import de.app.fivegla.fiware.model.Device;
+import de.app.fivegla.fiware.model.DeviceCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.List;
 
 /**
  * Service for integration with FIWARE.
@@ -24,12 +27,22 @@ public class FiwareIntegrationServiceWrapper {
         this.deviceMeasurementIntegrationService = deviceMeasurementIntegrationService;
     }
 
-    private static String getFiwareId(int sensorId) {
-        return Constants.FIWARE_FARM21_SENSOR_ID_PREFIX + sensorId;
+    /**
+     * Create a new device in FIWARE.
+     */
+    public void createDevice(String droneId) {
+        var fiwareId = getFiwareId(droneId);
+        var device = Device.builder()
+                .deviceCategory(DeviceCategory.builder()
+                        .value(List.of(DeviceCategoryValues.MicaSenseDrone.getKey()))
+                        .build())
+                .id(fiwareId)
+                .build();
+        deviceIntegrationService.persist(device);
     }
 
-    private static String getFiwareId() {
-        return Constants.FIWARE_FARM21_SENSOR_ID_PREFIX + UUID.randomUUID();
+    private static String getFiwareId(String sensorId) {
+        return Constants.MICA_SENSE_DRONE_ID_PREFIX + sensorId;
     }
 
 }

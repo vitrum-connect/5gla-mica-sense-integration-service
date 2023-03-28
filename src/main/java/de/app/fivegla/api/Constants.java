@@ -5,6 +5,6 @@ package de.app.fivegla.api;
  */
 public interface Constants {
 
-    String FIWARE_FARM21_SENSOR_ID_PREFIX = "urn:5gla:farm21-sensor:";
+    String MICA_SENSE_DRONE_ID_PREFIX = "urn:5gla:mica-sense-drone:";
 
 }
