@@ -1,4 +1,4 @@
-# 5GLa integration service
+# 5gLa integration service
 
 ## Profiles
 
