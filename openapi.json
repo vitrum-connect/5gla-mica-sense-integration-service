@@ -5,37 +5,68 @@
     "description": "This service provides the integration of the Farm21 API with the 5GLA platform.",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:8080",
-      "description": "Generated server url"
-    }
-  ],
   "paths": {
-    "/sensor-import/run": {
+    "/images/": {
       "post": {
         "tags": [
-          "sensor-import-controller"
+          "image-processing-controller"
         ],
-        "description": "Run the import manually.",
-        "operationId": "sensor-import.run",
+        "description": "Processes an image from the mica sense camera.",
+        "operationId": "images.process-image",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageProcessingRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
+          "400": {
+            "description": "The request is invalid.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageProcessingResponse"
+                }
+              }
+            }
+          },
           "200": {
-            "description": "The import was started."
+            "description": "Image was processed successfully.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImageProcessingResponse"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/sensor-data-import/run": {
+    "/drone/register": {
       "post": {
         "tags": [
-          "sensor-data-import-controller"
+          "register-drone-controller"
         ],
-        "description": "Run the import manually.",
-        "operationId": "sensor-data-import.run",
+        "description": "Registers a drone.",
+        "operationId": "register-drone.register-drone",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDroneRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "The import was started."
+            "description": "Drone was registered successfully."
           }
         }
       }
@@ -61,20 +92,34 @@
         }
       }
     },
-    "/info/last-run": {
+    "/images/{oid}": {
       "get": {
         "tags": [
-          "info-controller"
+          "image-processing-controller"
         ],
-        "description": "Fetch the last run of the import.",
-        "operationId": "info.last-rum",
+        "description": "Returns an image from the mica sense camera stored in the database.",
+        "operationId": "images.get-image",
+        "parameters": [
+          {
+            "name": "oid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "The last run of the application.",
+            "description": "The image was found and returned.",
             "content": {
-              "application/json": {
+              "image/tiff": {
                 "schema": {
-                  "$ref": "#/components/schemas/LastRunResponse"
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
                 }
               }
             }
@@ -85,6 +130,60 @@
   },
   "components": {
     "schemas": {
+      "ImageProcessingRequest": {
+        "required": [
+          "base64Image",
+          "droneId",
+          "micaSenseChannel"
+        ],
+        "type": "object",
+        "properties": {
+          "droneId": {
+            "type": "string",
+            "description": "The id of the drone."
+          },
+          "micaSenseChannel": {
+            "type": "string",
+            "description": "The channel of the image.",
+            "enum": [
+              "BLUE",
+              "GREEN",
+              "RED",
+              "RED_EDGE",
+              "NIR"
+            ]
+          },
+          "base64Image": {
+            "type": "string",
+            "description": "The base64 encoded tiff image."
+          }
+        },
+        "description": "Request for image processing."
+      },
+      "ImageProcessingResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The timestamp of the response."
+          },
+          "oid": {
+            "type": "string",
+            "description": "The oid of the image."
+          }
+        },
+        "description": "Response for image processing."
+      },
+      "RegisterDroneRequest": {
+        "type": "object",
+        "properties": {
+          "droneId": {
+            "type": "string",
+            "description": "The id of the drone."
+          }
+        },
+        "description": "Request for registering a drone."
+      },
       "VersionResponse": {
         "type": "object",
         "properties": {
@@ -95,20 +194,6 @@
           "version": {
             "type": "string",
             "description": "The version."
-          }
-        },
-        "description": "Response wrapper."
-      },
-      "LastRunResponse": {
-        "type": "object",
-        "properties": {
-          "timestamp": {
-            "type": "string",
-            "description": "The timestamp of the response."
-          },
-          "lastRun": {
-            "type": "string",
-            "description": "The last run."
           }
         },
         "description": "Response wrapper."
