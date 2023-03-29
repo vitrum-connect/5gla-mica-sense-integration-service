@@ -18,6 +18,7 @@ public class ImageProcessingRequest {
     /**
      * The id of the drone.
      */
+    @NotBlank
     @Schema(description = "The id of the drone.")
     private String droneId;
 
@@ -33,5 +34,5 @@ public class ImageProcessingRequest {
      */
     @NotBlank
     @Schema(description = "The base64 encoded tiff image.")
-    private String base64EncodedTiffImage;
+    private String base64Image;
 }
