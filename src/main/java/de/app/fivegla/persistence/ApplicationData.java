@@ -24,7 +24,7 @@ public class ApplicationData {
      * Add image to the list of images.
      *
      * @param micaSenseImage The image to add.
-     * @return
+     * @return The added image.
      */
     protected MicaSenseImage addMicaSenseImage(MicaSenseImage micaSenseImage) {
         if (null == micaSenseImages) {
