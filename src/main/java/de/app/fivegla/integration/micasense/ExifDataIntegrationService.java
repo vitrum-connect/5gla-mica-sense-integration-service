@@ -58,9 +58,7 @@ public class ExifDataIntegrationService {
                     .entries.stream().filter(t -> t.getTag() == TiffTagConstants.TIFF_TAG_DATE_TIME.tag).findFirst().ifPresentOrElse(t -> {
                         log.debug("Found the following date time: {}", t);
                         tiffFieldRef.set(t);
-                    }, () -> {
-                        log.warn("Could not find date time in image metadata");
-                    });
+                    }, () -> log.warn("Could not find date time in image metadata"));
             var tiffField = tiffFieldRef.get();
             if (null == tiffField) {
                 log.error("Could not find date time in image metadata");
