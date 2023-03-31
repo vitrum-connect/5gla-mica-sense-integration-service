@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ExifDataIntegrationServiceTest {
 
     @Test
-    void givenValidImageWhenReadingExifDataThenReturnExifData() throws Throwable {
+    void givenValidImageWhenReadingGpsDataThenReturnGpsData() throws Throwable {
         var image = readImageFromResources();
         Assertions.assertNotNull(image);
 
@@ -14,6 +14,15 @@ class ExifDataIntegrationServiceTest {
         Assertions.assertNotNull(imageMetadata);
         Assertions.assertEquals(52.8874122, imageMetadata.getCoordinates().get(0));
         Assertions.assertEquals(10.4364606, imageMetadata.getCoordinates().get(1));
+    }
+
+    @Test
+    void givenValidImageWhenReadingTimeDataThenReturnTimeData() throws Throwable {
+        var image = readImageFromResources();
+        Assertions.assertNotNull(image);
+
+        var imageMetadata = new ExifDataIntegrationService().readMeasuredAt(image);
+        Assertions.assertNotNull(imageMetadata);
     }
 
     private byte[] readImageFromResources() throws Throwable {

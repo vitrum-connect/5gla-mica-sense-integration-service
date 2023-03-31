@@ -1,8 +1,11 @@
 package de.app.fivegla.model;
 
+import de.app.fivegla.fiware.model.Location;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.Instant;
 
 /**
  * MicaSense image.
@@ -32,4 +35,13 @@ public class MicaSenseImage {
      */
     private String base64Image;
 
+    /**
+     * The time the image was taken.
+     */
+    private Instant measuredAt;
+
+    /**
+     * The location of the image.
+     */
+    private Location location;
 }
