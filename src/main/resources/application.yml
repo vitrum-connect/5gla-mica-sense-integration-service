@@ -1,5 +1,9 @@
 app:
   version: '@project.version@'
+  image:
+    path:
+      base:
+        url: ${IMAGE_PATH_BASE_URL}
 fiware:
   context-broker-url: ${CONTEXT_BROKER_URL}
 logging:
