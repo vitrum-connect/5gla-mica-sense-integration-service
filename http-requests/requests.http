@@ -1,15 +1,7 @@
 ### Get version
 GET {{base-url}}/info/version
 
-### Register drone
-POST {{base-url}}/drone/register
-Content-Type: application/json
-
-{
-  "droneId": "14111983"
-}
-
-### Process immage
+### Process image
 POST {{base-url}}/images/
 Content-Type: application/json
 
@@ -20,4 +12,4 @@ Content-Type: application/json
 }
 
 ### Get image
-GET {{base-url}}/images/{{image-oid}}
+GET {{base-url}}/images/aace4b53-6265-4279-b588-61c2d98d24a7
