@@ -1,11 +1,11 @@
 package de.app.fivegla.controller.dto.request;
 
-import de.app.fivegla.model.MicaSenseChannel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * Request for image processing.
@@ -23,16 +23,8 @@ public class ImageProcessingRequest {
     private String droneId;
 
     /**
-     * The channel of the image since the value can not be read from the EXIF.
+     * The images to process.
      */
-    @NotNull
-    @Schema(description = "The channel of the image.")
-    private MicaSenseChannel micaSenseChannel;
-
-    /**
-     * The base64 encoded tiff image.
-     */
-    @NotBlank
-    @Schema(description = "The base64 encoded tiff image.")
-    private String base64Image;
+    @Schema(description = "The images to process.")
+    private List<DroneImage> images;
 }

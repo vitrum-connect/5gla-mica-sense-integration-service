@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -29,17 +30,17 @@ public class ImageProcessingController {
     }
 
     /**
-     * Processes an image from the mica sense camera.
+     * Processes one or multiple images from the mica sense camera.
      *
      * @return 200 if image was processed successfully.
      */
     @Operation(
             operationId = "images.process-image",
-            description = "Processes an image from the mica sense camera."
+            description = "Processes one or multiple images from the mica sense camera."
     )
     @ApiResponse(
             responseCode = "200",
-            description = "Image was processed successfully."
+            description = "Images were processed successfully."
     )
     @ApiResponse(
             responseCode = "400",
@@ -47,10 +48,14 @@ public class ImageProcessingController {
     )
     @PostMapping(value = "/", consumes = "application/json")
     public ResponseEntity<ImageProcessingResponse> processImage(@Valid @RequestBody ImageProcessingRequest request) {
-        log.debug("Processing image for channel: {}.", request.getMicaSenseChannel());
-        var oid = micaSenseIntegrationService.processImage(request.getDroneId(), request.getMicaSenseChannel(), request.getBase64Image());
+        log.debug("Processing image for the drone: {}.", request.getDroneId());
+        var oids = new ArrayList<String>();
+        request.getImages().forEach(droneImage -> {
+            var oid = micaSenseIntegrationService.processImage(request.getDroneId(), droneImage.getMicaSenseChannel(), droneImage.getBase64Image());
+            oids.add(oid);
+        });
         return ResponseEntity.ok(ImageProcessingResponse.builder()
-                .oid(oid)
+                .oids(oids)
                 .build());
     }
 
